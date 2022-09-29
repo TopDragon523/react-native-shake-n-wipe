@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { styles } from './styles';
-import Images from '../../utils/Images';
 import IconButton from '../IconButton';
 
 const Header = ({
