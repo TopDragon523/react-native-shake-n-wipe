@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -16,67 +15,41 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MasonryList from '@react-native-seoul/masonry-list';
 import CheckBox from '@react-native-community/checkbox';
 import { LineChart } from 'react-native-charts-wrapper';
-
+import EmoticPopup from '../../components/EmoticPopup';
+import { Picker } from '@react-native-picker/picker';
 
 const DailyView = () => {
-    const [items] = useState([
-        {
-            item: 'item1',
-            subItem: "sub item1",
-        },
-        {
-            item: 'item2',
-            subItem: "sub item2",
-        },
-        {
-            item: 'item3',
-            subItem: "sub item3",
-        },
-        {
-            item: 'item4',
-            subItem: "sub item4",
-        },
-        {
-            item: 'item5',
-            subItem: "sub item5",
-        },
-        {
-            item: 'item6',
-            subItem: "sub item6",
-        },
-        {
-            item: 'item7',
-            subItem: "sub item7",
-        },
-        {
-            item: 'item8',
-            subItem: "sub item8",
-        },
-        {
-            item: 'item9',
-            subItem: "sub item9",
-        },
-        {
-            item: 'item10',
-            subItem: "sub item10",
-        },
-        {
-            item: 'item11',
-            subItem: "sub item11",
-        }
-    ]);
+    const [items, setItems] = useState([]);
     const [subTabIndex, setSubTabIndex] = useState(-1);
+    useEffect(() => {
+        let timeArray = [];
+        let d = new Date();
+        for (let i = 1; i <= 24; i++) {
+            timeArray.push({
+                interval: i < 12 ? ((i - 1) + 'am - ' + i + 'am') : ((i - 12 - 1) + 'am - ' + (i - 12) + 'am'),
+                today: 0,
+                yesterday: 0
+            })
+        }
+        setItems(timeArray);
+    }, [])
     const renderItem = ({ item }) => {
         return (
             <View
                 style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
                     paddingHorizontal: scale(20),
                     paddingVertical: scale(10),
                     borderBottomColor: Colors.greyColor,
-                    borderWidth: scale(0.5)
+                    borderWidth: scale(0.5),
+                    borderTopWidth: scale(0),
+                    borderTopColor: Colors.transparent,
+                    marginTop: scale(1)
                 }}>
-                <Text>{item.item}</Text>
-                <Text>{item.subItem}</Text>
+                <Text>{item.interval}</Text>
+                <Text>{item.today}</Text>
+                <Text>{item.yesterday}</Text>
             </View>
         )
     }
@@ -148,10 +121,15 @@ const DailyView = () => {
 };
 
 const MonthlyTrend = () => {
-
     return (
         <SafeAreaView style={styles.tabContent}>
-            <Text>{'Hello world'}</Text>
+            <EmoticPopup
+                style={{
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            />
             <View style={{ flex: 1 }}>
                 <View style={{
                     flex: 1,
@@ -203,7 +181,7 @@ const MainScreen = ({ navigation }) => {
         { key: 'first', title: 'daily view' },
         { key: 'second', title: 'monthly trend' },
     ]);
-
+    const [selectedValue, setSelectedValue] = useState('first');
     const renderTabBar = (props) => (
         <TabBar
             {...props}
@@ -248,6 +226,27 @@ const MainScreen = ({ navigation }) => {
                     <Text style={styles.message}>
                         {'Hi Unknown user'}
                     </Text>
+                </View>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <Picker
+                        mode='dropdown'
+                        selectedValue={selectedValue}
+                        style={{
+                            alignItems: 'center',
+                            height: scale(50),
+                            width: scale(150)
+                        }}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="Reinoud" value="first" />
+                        <Picker.Item label="Mote 8 User" value="second" />
+                        <Picker.Item label="Muskaan Garg" value="third" />
+                    </Picker>
                 </View>
                 <View style={styles.songList}>
                     <TabView

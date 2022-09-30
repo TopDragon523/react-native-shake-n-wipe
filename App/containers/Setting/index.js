@@ -13,9 +13,11 @@ import Header from '../../components/Header';
 import { textScale } from '../../utils/textUtil';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MasonryList from '@react-native-seoul/masonry-list';
-import AuthInput from '../../components/AuthInput';
 import OutlineButton from '../../components/OutlineButton';
 import { LineChart } from 'react-native-charts-wrapper';
+import TextField from '../../components/TextField';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import EmoticPopup from '../../components/EmoticPopup';
 
 
 const DailyView = () => {
@@ -135,7 +137,8 @@ const SettingScreen = ({ navigation }) => {
         { key: 'second', title: 'thinking of...' },
         { key: 'third', title: 'in work life' },
     ]);
-
+    const [shakeName, setShakeName] = useState(null);
+    const [wipeName, setWipeName] = useState(null);
     const renderTabBar = (props) => (
         <TabBar
             {...props}
@@ -162,7 +165,7 @@ const SettingScreen = ({ navigation }) => {
         />
     );
     return (
-        <View style={styles.container}>
+        < View style={styles.container} >
             <Header
                 title={'Shake n Wipe Setting'}
                 leftIcon={Images.ic_back}
@@ -171,58 +174,78 @@ const SettingScreen = ({ navigation }) => {
                 }}
                 rightIcon={Images.ic_info}
             />
-            <View style={styles.containerInner}>
-                <View style={{
-                    marginTop: scale(10)
-                }}>
-                    <AuthInput
-                        placeholder='Name Your Shakes'
-                        // icon={Images.ic_email}
-                        value={''}
-                        onChangeText={(v) => setUserName(v)}
-                        borderType={"roundTop"}
-                    />
-                </View>
-                <View style={{
-                    marginTop: scale(10)
-                }}>
-                    <AuthInput
-                        placeholder='Name Your Wipes'
-                        // icon={Images.ic_email}
-                        value={''}
-                        onChangeText={(v) => setUserName(v)}
-                        borderType={"roundTop"}
-                    />
-                </View>
-                <View style={{
-                    marginVertical: scale(20)
-                }}>
-                    <Text style={{
-                        fontSize: scale(16),
-                        color: Colors.black
+            <KeyboardAwareScrollView>
+                <View style={styles.containerInner}>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: scale(10)
                     }}>
-                        {'You can assign an y activity or emotion to the Shake and Wipe action, Here are some ideas tap on any to select and edit '}
-                    </Text>
+                        <TextField
+                            style={{
+                                flex: 1
+                            }}
+                            counter={true}
+                            value={shakeName}
+                            label={'Name Your Shakes'}
+                            onChangeText={(v) => setShakeName(v)}
+                        />
+                        <EmoticPopup
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        />
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        marginTop: scale(10)
+                    }}>
+                        <TextField
+                            style={{
+                                flex: 1
+                            }}
+                            counter={true}
+                            label='Name Your Wipes'
+                            value={wipeName}
+                            onChangeText={(v) => setWipeName(v)}
+                        />
+                        <EmoticPopup
+                            style={{
+                                justifyContent: 'center',
+                            }}
+                        />
+                    </View>
+                    <View style={{
+                        marginVertical: scale(20)
+                    }}>
+                        <Text style={{
+                            fontSize: scale(16),
+                            color: Colors.black
+                        }}>
+                            {'You can assign an y activity or emotion to the Shake and Wipe action, Here are some ideas tap on any to select and edit '}
+                        </Text>
+                    </View>
+                    <View style={styles.loginWrapper}>
+                        <OutlineButton
+                            title="CONFIRM CHANGES"
+                            loading={false}
+                            onPress={() => {
+                                navigation.navigate('Track');
+                            }}
+                        />
+                    </View>
+                    <View style={styles.songList}>
+                        <TabView
+                            navigationState={{ index, routes }}
+                            renderScene={renderScene}
+                            renderTabBar={renderTabBar}
+                            onIndexChange={setIndex}
+                        />
+                    </View>
                 </View>
-                <View style={styles.loginWrapper}>
-                    <OutlineButton
-                        title="CONFIRM CHANGES"
-                        loading={false}
-                        onPress={() => {
-                            navigation.navigate('Track');
-                        }}
-                    />
-                </View>
-                <View style={styles.songList}>
-                    <TabView
-                        navigationState={{ index, routes }}
-                        renderScene={renderScene}
-                        renderTabBar={renderTabBar}
-                        onIndexChange={setIndex}
-                    />
-                </View>
-            </View>
-        </View>
+            </KeyboardAwareScrollView>
+        </View >
     )
 }
 export default SettingScreen;

@@ -6,6 +6,8 @@ import {textScale} from '../../utils/textUtil';
 
 export const styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
+    alignItems:'center',
     backgroundColor: Colors.transparent,
   },
   text: {

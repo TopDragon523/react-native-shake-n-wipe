@@ -1,25 +1,26 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import AuthInput from '../../components/AuthInput';
 import LinkButton from '../../components/LinkButton';
 import OutlineButton from '../../components/OutlineButton';
 import { styles } from './styles';
 import Header from '../../components/Header';
+import TextField from '../../components/TextField';
+import { scale } from '../../utils/scale';
 
 const SignInScreen = ({ navigation }) => {
-    const [userName, setUserName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     return (
         <View style={styles.container}>
-            <KeyboardAwareScrollView style={{ flex: 1 }} contentContainerStyle={{ flex: 1, }}>
-                <Header
-                    title={'Login to Shake n Wipe'}
-                />
+            <Header
+                title={'Login to Shake n Wipe'}
+            />
+            <KeyboardAwareScrollView style={{ flex: 1 }}>
                 <View style={styles.containerInner}>
                     <View style={styles.loginMessageWrapper}>
                         <Text style={styles.loginMessage}>
@@ -27,28 +28,22 @@ const SignInScreen = ({ navigation }) => {
                         </Text>
                     </View>
                     <View style={styles.inputForm}>
-                        <AuthInput
-                            placeholder='Name'
-                            // icon={Images.ic_email}
+                        <TextField
                             value={userName}
+                            label={'Name'}
                             onChangeText={(v) => setUserName(v)}
-                            borderType={"roundTop"}
                         />
                         <View style={styles.divider} />
-                        <AuthInput
-                            placeholder='Email'
-                            // icon={Images.ic_email}
+                        <TextField
                             value={email}
+                            label={'Email'}
                             onChangeText={(v) => setEmail(v)}
-                            borderType={"roundTop"}
                         />
                         <View style={styles.divider} />
-                        <AuthInput
-                            placeholder='Password'
-                            // icon={Images.ic_password}
+                        <TextField
                             value={password}
+                            label={'Password'}
                             onChangeText={(v) => setPassword(v)}
-                            borderType={"roundBottom"}
                             secureTextEntry={true}
                         />
                     </View>
@@ -62,9 +57,18 @@ const SignInScreen = ({ navigation }) => {
                             }}
                         />
                         <View style={styles.continueMessageWrapper}>
-                            <Text>
-                                {'By clicking continue you agree with our Privany Policy'}
+                            <Text style={{
+                                fontSize: scale(13)
+                            }}>
+                                {'By clicking continue you agree with our '}
                             </Text>
+                            <LinkButton
+                                title="Privany Policy"
+                                underline={false}
+                                onPress={() => {
+                                    navigation.navigate("Policy");
+                                }}
+                            />
                         </View>
                     </View>
                     <View style={styles.forgetWrapper}>
@@ -72,7 +76,8 @@ const SignInScreen = ({ navigation }) => {
                             title="Reset Password?"
                             underline={false}
                             onPress={() => {
-                                // navigation.navigate("Profile");
+                                // navigation.navigate("Policy");
+                                console.log('test')
                             }}
                         />
                     </View>

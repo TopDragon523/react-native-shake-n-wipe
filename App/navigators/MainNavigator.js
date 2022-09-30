@@ -7,6 +7,7 @@ import MainScreen from '../containers/Main';
 import SettingScreen from '../containers/Setting';
 import TrackScreen from '../containers/Track';
 import AboutScreen from '../containers/About';
+import PolicyScreen from '../containers/Policy';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const MainNavigator = () => {
                 <Stack.Screen name="Setting" component={SettingScreen} />
                 <Stack.Screen name="Track" component={TrackScreen} />
                 <Stack.Screen name="About" component={AboutScreen} />
+                <Stack.Screen name="Policy" component={PolicyScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
