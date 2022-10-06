@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -17,6 +17,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { LineChart } from 'react-native-charts-wrapper';
 import EmoticPopup from '../../components/EmoticPopup';
 import { Picker } from '@react-native-picker/picker';
+import { AuthContext } from '../../AuthProvider';
 
 const DailyView = () => {
     const [items, setItems] = useState([]);
@@ -175,6 +176,8 @@ const renderScene = SceneMap({
     second: MonthlyTrend,
 });
 const MainScreen = ({ navigation }) => {
+    const { user } = useContext(AuthContext);
+    console.log('Hello world ', user);
     const [mute, setMute] = useState(false);
     const [index, setIndex] = useState(0);
     const [routes] = useState([
@@ -224,7 +227,7 @@ const MainScreen = ({ navigation }) => {
             <View style={styles.containerInner}>
                 <View style={styles.messageWrapper}>
                     <Text style={styles.message}>
-                        {'Hi Unknown user'}
+                        {'Hi ' + (user.displayName != null ? user.displayName : 'Unknown user')}
                     </Text>
                 </View>
                 <View

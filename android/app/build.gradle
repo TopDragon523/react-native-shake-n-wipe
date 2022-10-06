@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-apply plugin: "com.google.gms.google-services"
+apply plugin: 'com.google.gms.google-services'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
@@ -133,7 +133,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.teledentistry"
+        applicationId "com.shakenwipe"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -149,10 +149,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
+            storeFile file('keystore.jks')
+            storePassword 'androidkey123'
             keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            keyPassword 'androidkey'
         }
         release {
             if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
@@ -204,6 +204,9 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    //for firebase authtication
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-analytics'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

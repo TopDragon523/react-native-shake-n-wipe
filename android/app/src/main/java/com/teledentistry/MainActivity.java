@@ -1,4 +1,4 @@
-package com.teledentistry;
+package com.shakenwipe;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Teledentistry";
+    return "Shakenwipe";
   }
 }

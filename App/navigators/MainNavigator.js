@@ -8,10 +8,12 @@ import SettingScreen from '../containers/Setting';
 import TrackScreen from '../containers/Track';
 import AboutScreen from '../containers/About';
 import PolicyScreen from '../containers/Policy';
+import { AuthContext } from '../AuthProvider';
 
 const Stack = createNativeStackNavigator();
 
 const MainNavigator = () => {
+    const { user } = useContext(AuthContext)
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -27,14 +29,23 @@ const MainNavigator = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="SignIn" component={SignInScreen} />
-                <Stack.Screen name="Main" component={MainScreen} />
-                <Stack.Screen name="Setting" component={SettingScreen} />
-                <Stack.Screen name="Track" component={TrackScreen} />
-                <Stack.Screen name="About" component={AboutScreen} />
-                <Stack.Screen name="Policy" component={PolicyScreen} />
+                {
+                    (user == null || user == undefined) ? (
+                        <>
+                            <Stack.Screen name="SignIn" component={SignInScreen} />
+                        </>
+                    ) : (
+                        <>
+                            <Stack.Screen name="Main" component={MainScreen} />
+                            <Stack.Screen name="Setting" component={SettingScreen} />
+                            <Stack.Screen name="Track" component={TrackScreen} />
+                            <Stack.Screen name="About" component={AboutScreen} />
+                            <Stack.Screen name="Policy" component={PolicyScreen} />
+                        </>
+                    )
+                }
             </Stack.Navigator>
-        </NavigationContainer>
+        </NavigationContainer >
     );
 };
 

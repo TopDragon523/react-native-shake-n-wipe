@@ -41,6 +41,7 @@ export function setUserOnline(id, online) {
       merge: true
     });
 }
+
 export function setUserTyping(id, userid, typing) {
   return firestore()
     .collection('channels')

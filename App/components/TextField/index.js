@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { View, Text, TextInput, Animated, Easing } from 'react-native';
 import Colors from '../../utils/Colors';
 import { scale } from '../../utils/scale';
 import { styles } from './styles';
 
 
-const TextField = (props) => {
+const TextField = forwardRef((props, ref) => {
     const {
         label,
         style,
@@ -17,7 +17,6 @@ const TextField = (props) => {
         ...restOfProps
     } = props;
 
-    const ref = useRef();
     const [color, setColor] = useState(Colors.black);
     const focusAnim = useRef(new Animated.Value(0)).current
     const [isFocused, setIsFocused] = useState(false)
@@ -91,5 +90,5 @@ const TextField = (props) => {
             {!!errorText && <Text style={styles.error}>{errorText}</Text>}
         </View >
     )
-};
+});
 export default TextField;

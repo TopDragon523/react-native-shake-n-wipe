@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "237451257952",
-    "project_id": "grin-tele-dentistry",
-    "storage_bucket": "grin-tele-dentistry.appspot.com"
+    "project_number": "1044559162785",
+    "project_id": "shakenwipe",
+    "storage_bucket": "shakenwipe.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:237451257952:android:b17124931e6f3ab651bb05",
+        "mobilesdk_app_id": "1:1044559162785:android:76377071c850cd219d6fe0",
         "android_client_info": {
-          "package_name": "com.teledentistry"
+          "package_name": "com.shakenwipe"
         }
       },
       "oauth_client": [
         {
-          "client_id": "237451257952-h2kvhiorcpn4kn3ko5pet91qkkod274m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.teledentistry",
-            "certificate_hash": "227f9e395c38e0c53877550fa5167fbab8a1ce25"
-          }
-        },
-        {
-          "client_id": "237451257952-v73l45lohgv22if3n7clfjshu2deupa4.apps.googleusercontent.com",
+          "client_id": "1044559162785-jmcan74f33kpdv116bfv3at397so722s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBzVW7mE7QsqQ5o-tFXh9PY2nhEs7X0Cxk"
+          "current_key": "AIzaSyBykRUITswe6GPv8IP6Jq8pdlcB1MueYJc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "237451257952-v73l45lohgv22if3n7clfjshu2deupa4.apps.googleusercontent.com",
+              "client_id": "1044559162785-jmcan74f33kpdv116bfv3at397so722s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

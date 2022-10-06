@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
     View,
     Text
@@ -10,8 +10,16 @@ import { styles } from './styles';
 import Header from '../../components/Header';
 import TextField from '../../components/TextField';
 import { scale } from '../../utils/scale';
+import { AuthContext } from '../../AuthProvider';
 
 const SignInScreen = ({ navigation }) => {
+    const { login, register, userProfile, user, loading } = useContext(AuthContext)
+    // console.log('user profile ', userProfile)
+    // console.log('user state ', user)
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,31 +37,36 @@ const SignInScreen = ({ navigation }) => {
                     </View>
                     <View style={styles.inputForm}>
                         <TextField
+                            ref={nameRef}
                             value={userName}
                             label={'Name'}
                             onChangeText={(v) => setUserName(v)}
+                            onSubmitEditing={() => emailRef.current.focus()}
                         />
                         <View style={styles.divider} />
                         <TextField
+                            ref={emailRef}
                             value={email}
                             label={'Email'}
                             onChangeText={(v) => setEmail(v)}
+                            onSubmitEditing={() => passwordRef.current.focus()}
                         />
                         <View style={styles.divider} />
                         <TextField
+                            ref={passwordRef}
                             value={password}
                             label={'Password'}
                             onChangeText={(v) => setPassword(v)}
+                            onSubmitEditing={() => console.log('hello world')}
                             secureTextEntry={true}
                         />
                     </View>
                     <View style={styles.loginWrapper}>
                         <OutlineButton
                             title="CONTINUE"
-                            loading={false}
+                            loading={loading}
                             onPress={() => {
-                                navigation.navigate('Main');
-                                // login(userName, password);
+                                login(userName, email.trim(), password);
                             }}
                         />
                         <View style={styles.continueMessageWrapper}>

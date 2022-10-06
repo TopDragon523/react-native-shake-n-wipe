@@ -8,11 +8,13 @@
 
 import React from 'react';
 import MainNavigator from './App/navigators/MainNavigator';
-
+import { AuthProvider } from './App/AuthProvider';
 
 const App = () => {
   return (
-    <MainNavigator />
+    <AuthProvider>
+      <MainNavigator />
+    </AuthProvider>
   )
 };
 
