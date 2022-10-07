@@ -11,6 +11,8 @@ import Header from '../../components/Header';
 import TextField from '../../components/TextField';
 import { scale } from '../../utils/scale';
 import { AuthContext } from '../../AuthProvider';
+import analytics from '@react-native-firebase/analytics';
+
 
 const SignInScreen = ({ navigation }) => {
     const { login, register, userProfile, user, loading } = useContext(AuthContext)
@@ -65,8 +67,15 @@ const SignInScreen = ({ navigation }) => {
                         <OutlineButton
                             title="CONTINUE"
                             loading={loading}
-                            onPress={() => {
-                                login(userName, email.trim(), password);
+                            onPress={async () => {
+                                await login(userName, email.trim(), password);
+                                await analytics().logEvent('basket', {
+                                    id: 3745092,
+                                    item: 'mens grey t-shirt',
+                                    description: ['round neck', 'long sleeved'],
+                                    size: 'L',
+                                })
+
                             }}
                         />
                         <View style={styles.continueMessageWrapper}>

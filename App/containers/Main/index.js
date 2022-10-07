@@ -18,29 +18,111 @@ import { LineChart } from 'react-native-charts-wrapper';
 import EmoticPopup from '../../components/EmoticPopup';
 import { Picker } from '@react-native-picker/picker';
 import { AuthContext } from '../../AuthProvider';
+import Dataset from '../../utils/Dataset';
+
+
+const formatDate = (date) => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 const DailyView = () => {
+    const [shakeItems, setShakeItems] = useState([]);
+    const [wipeItems, setWipeItems] = useState([]);
     const [items, setItems] = useState([]);
-    const [subTabIndex, setSubTabIndex] = useState(-1);
+    const [subTabIndex, setSubTabIndex] = useState(1);
+    const [dataset] = useState(Dataset);
     useEffect(() => {
-        let timeArray = [];
-        let d = new Date();
-        for (let i = 1; i <= 24; i++) {
-            timeArray.push({
-                interval: i < 12 ? ((i - 1) + 'am - ' + i + 'am') : ((i - 12 - 1) + 'am - ' + (i - 12) + 'am'),
-                today: 0,
-                yesterday: 0
-            })
+        let now = new Date(2022, 3, 5);
+        let today = formatDate(now);
+        let yesterday = formatDate(now.setDate(now.getDate() - 1));
+        let dayStart = 0;
+
+        let shakeArray = [];
+        let wipeArray = [];
+        console.log(today);
+        console.log(yesterday);
+        for (let i = 0; i < 24; i++) {
+            let todayByHourShake = 0;
+            let yesterdayByHourShake = 0;
+            let todayByHourWipe = 0;
+            let yesterdayByHourWipe = 0;
+            try {
+                dataset.forEach((item) => {
+                    let tempHour = parseInt(item.localTime.split(':')[0]);
+                    if (item.localDate === yesterday) {
+                        if (dayStart === tempHour) {
+                            if (item.eventName === 'shake') {
+                                yesterdayByHourShake++;
+                            }
+                            if (item.eventName === 'wipe') {
+                                yesterdayByHourWipe++;
+                            }
+                        }
+                    }
+                    if (item.localDate === today) {
+                        if (dayStart === tempHour) {
+                            if (item.eventName === 'shake') {
+                                todayByHourShake++;
+                            }
+                            if (item.eventName === 'wipe') {
+                                todayByHourWipe++;
+                            }
+                        }
+                    }
+                });
+                shakeArray.push({
+                    interval: i <= 12 ? (
+                        (i == 0 ? 12 : i) + 'am - ' + (i == 12 ? 1 : i + 1) + (i == 12 ? 'pm' : 'am')) : (
+                        (i - 12) + 'pm - ' + (i + 1 - 12) + 'pm'),
+                    today: todayByHourShake,
+                    yesterday: yesterdayByHourShake
+                })
+                wipeArray.push({
+                    interval: i <= 12 ? (
+                        (i == 0 ? 12 : i) + 'am - ' + (i + 1) + 'am') : (
+                        (i - 12) + 'am - ' + (i + 1 - 12) + 'am'),
+                    today: todayByHourWipe,
+                    yesterday: yesterdayByHourWipe
+                })
+                dayStart++;
+            } catch (err) {
+                shakeArray.push({
+                    interval: i <= 12 ? (
+                        (i == 0 ? 12 : i) + 'am - ' + (i + 1) + 'am') : (
+                        (i - 12) + 'am - ' + (i + 1 - 12) + 'am'),
+                    today: 0,
+                    yesterday: 0
+                })
+                wipeArray.push({
+                    interval: i <= 12 ? (
+                        (i == 0 ? 12 : i) + 'am - ' + (i + 1) + 'am') : (
+                        (i - 12) + 'am - ' + (i + 1 - 12) + 'am'),
+                    today: 0,
+                    yesterday: 0
+                })
+            }
         }
-        setItems(timeArray);
+        setItems(shakeArray);
+        setShakeItems(shakeArray);
+        setWipeItems(wipeArray);
     }, [])
     const renderItem = ({ item }) => {
         return (
             <View
                 style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    paddingHorizontal: scale(20),
+                    justifyContent: 'flex-start',
+                    paddingHorizontal: scale(0),
                     paddingVertical: scale(10),
                     borderBottomColor: Colors.greyColor,
                     borderWidth: scale(0.5),
@@ -48,52 +130,54 @@ const DailyView = () => {
                     borderTopColor: Colors.transparent,
                     marginTop: scale(1)
                 }}>
-                <Text>{item.interval}</Text>
-                <Text>{item.today}</Text>
-                <Text>{item.yesterday}</Text>
+                <Text style={{
+                    width: '40%',
+                    alignSelf: 'center',
+                    paddingLeft: scale(15)
+                }}>{item.interval}</Text>
+                <Text style={{
+                    backgroundColor: item.today == 0 ? Colors.transparent : 'yellow',
+                    width: '30%',
+                    paddingLeft: scale(45)
+                }}>{item.today}</Text>
+                <Text style={{
+                    backgroundColor: item.yesterday == 0 ? Colors.transparent : 'yellow',
+                    width: '30%',
+                    paddingLeft: scale(50)
+                }}>{item.yesterday}</Text>
             </View>
         )
     }
-
     return (
         <SafeAreaView style={styles.tabContent}>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-            }}>
+            <View style={styles.tabContentInner}>
                 <TouchableOpacity
-                    style={{
-                        width: '50%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingVertical: scale(5),
-                        borderBottomColor: subTabIndex == 1 ? Colors.primaryColor : Colors.white,
-                        borderBottomWidth: scale(2)
+                    style={[
+                        styles.subTabWrapper,
+                        {
+                            borderBottomColor: subTabIndex == 1 ? Colors.primaryColor : Colors.white,
+                        }]}
+                    onPress={() => {
+                        setSubTabIndex(1);
+                        setItems(shakeItems);
                     }}
-                    onPress={() => setSubTabIndex(1)}
                 >
-                    <Text style={{
-                        color: Colors.black,
-                        fontSize: scale(16)
-                    }}>
+                    <Text style={styles.subTabContent}>
                         {'SHAKES'}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{
-                        width: '50%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingVertical: scale(5),
-                        borderBottomColor: subTabIndex == -1 ? Colors.primaryColor : Colors.white,
-                        borderBottomWidth: scale(2)
+                    style={[
+                        styles.subTabWrapper,
+                        {
+                            borderBottomColor: subTabIndex == -1 ? Colors.primaryColor : Colors.white,
+                        }]}
+                    onPress={() => {
+                        setSubTabIndex(-1);
+                        setItems(wipeItems);
                     }}
-                    onPress={() => setSubTabIndex(-1)}
                 >
-                    <Text style={{
-                        color: Colors.black,
-                        fontSize: scale(16)
-                    }}>
+                    <Text style={styles.subTabContent}>
                         {'WIPES'}
                     </Text>
                 </TouchableOpacity>
@@ -117,7 +201,7 @@ const DailyView = () => {
                 data={items}
                 renderItem={renderItem}
             />
-        </SafeAreaView>
+        </SafeAreaView >
     )
 };
 
@@ -125,17 +209,10 @@ const MonthlyTrend = () => {
     return (
         <SafeAreaView style={styles.tabContent}>
             <EmoticPopup
-                style={{
-                    width: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
+                style={styles.emoticPopup}
             />
             <View style={{ flex: 1 }}>
-                <View style={{
-                    flex: 1,
-                    backgroundColor: '#F5FCFF'
-                }}>
+                <View style={styles.graphWrapper}>
                     <LineChart
                         style={{
                             flex: 1
@@ -146,21 +223,18 @@ const MonthlyTrend = () => {
                                     {
                                         label: "demo",
                                         values: [
-                                            { y: 1 },
-                                            { y: 2 },
-                                            { y: 1 },
-                                            { y: 2 },
-                                            { y: 1 },
-                                            { y: 2 },
-                                            { y: 1 },
-                                            { y: 10 },
-                                            { y: 11 },
-                                            { y: 22 },
-                                            { y: 6 },
-                                            { y: 2 },
-                                            { y: 1 },
-                                            { y: 2 },
-                                            { y: 1 },
+                                            { x: 1, y: 1 },
+                                            { x: 2, y: 2 },
+                                            { x: 6, y: 10 },
+                                            { x: 7, y: 1 },
+                                            { x: 8, y: 10 },
+                                            { x: 9, y: 11 },
+                                            { x: 10, y: 22 },
+                                            { x: 11, y: 6 },
+                                            { x: 12, y: 2 },
+                                            { x: 13, y: 1 },
+                                            { x: 14, y: 2 },
+                                            { x: 15, y: 1 },
                                         ]
                                     }]
                             }}

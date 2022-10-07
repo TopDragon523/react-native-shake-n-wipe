@@ -18,16 +18,6 @@ export const styles = StyleSheet.create({
         minHeight: scale(610),
         width: '100%',
     },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginTop: scale(40),
-    },
-    itemHeader: {
-        color: Colors.black,
-        fontSize: scale(16)
-    },
     messageWrapper: {
         width: '100%',
         marginTop: scale(10),
@@ -35,84 +25,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    mainItemWrapper: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginHorizontal: scale(20),
-        marginTop: scale(20)
-    },
     message: {
         color: Colors.black,
         fontSize: textScale(20)
     },
-    youtube: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    textYoutube: {
-        marginRight: scale(10)
-    },
     songList: {
         marginTop: scale(18),
         flex: 1
-    },
-    tabView: {
-        // backgroundColor: Colors.white
-    },
-    tabContent: {
-        flex: 1,
-        // backgroundColor: 'pink',
-        marginTop: scale(20)
-    },
-    musicTitle: {
-        color: Colors.primaryColor,
-        fontSize: scale(15)
-    },
-    iamgeTitle: {
-        color: Colors.primaryColor,
-        fontSize: scale(20),
-        // alignItems: 'center',
-        // justifyContent: 'center',
-    },
-    photoItem: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    songItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: Colors.textInputBackground,
-        borderRadius: scale(8)
-    },
-    thumbnailWrapper: {
-        width: '30%'
-    },
-    itemContent: {
-        width: '50%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    songInfo: {
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'flex-start',
-    },
-    songTitle: {
-        fontSize: scale(18)
-    },
-    songArtist: {
-        fontSize: scale(15)
-    },
-    songTime: {
-        fontSize: scale(15)
-    },
-    removeIcon: {
-        marginRight: scale(15)
     },
     footer: {
         justifyContent: 'flex-end',
@@ -127,112 +46,44 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: scale(0),
     },
-    notetext: {
-        fontFamily: Fonts.EpilogueBold,
-        fontSize: scale(30),
-        color: Colors.black,
+    tabContent: {
+        flex: 1,
+        // backgroundColor: 'pink',
+        marginTop: scale(20)
     },
-    buttonEnter: {
-        backgroundColor: Colors.primaryBackColor
+    tabContentInner: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
-    plannote: {
-        marginTop: scale(8),
-        fontFamily: Fonts.EpilogueBold,
-        fontSize: scale(18),
-        lineHeight: scale(30),
-        textAlign: 'left',
-        color: Colors.primaryColor
-    },
-    topwishlist: {
-        width: '100%',
-        marginTop: scale(30),
-        backgroundColor: Colors.backgroundColor,
-    },
-    notemeanhead: {
-        fontFamily: Fonts.EpilogueBold,
-        fontSize: scale(18),
-        color: Colors.black,
-        marginBottom: scale(3)
-    },
-    notemean: {
-        fontFamily: Fonts.Light,
-        fontSize: scale(18),
-        color: Colors.primaryTextColor,
-        lineHeight: scale(27),
-        marginTop: 15
-    },
-    eventhint: {
-        width: '100%',
-        marginTop: scale(30),
-        paddingHorizontal: scale(52),
-        paddingVertical: scale(15),
-        borderRadius: scale(10),
+    subTabWrapper: {
+        width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.primaryBackColor,
+        paddingVertical: scale(5),
+        borderBottomWidth: scale(2)
     },
-    noteeventhint: {
-        fontFamily: Fonts.EpilogueBold,
-        fontSize: scale(17),
-        textAlign: 'center',
-        lineHeight: scale(27),
-        color: Colors.primaryColor,
+    subTabContent: {
+        color: Colors.black,
+        fontSize: scale(16)
     },
-    sharemessage: {
-        width: '100%',
-        marginTop: scale(15),
-        paddingHorizontal: scale(74),
-        paddingVertical: scale(16),
-        borderRadius: scale(10),
-        justifyContent: 'center',
+    itemHeader: {
+        color: Colors.black,
+        fontSize: scale(16)
+    },
+    mainItemWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: Colors.secondaryBackColor,
-        opacity: 0.1
+        marginHorizontal: scale(20),
+        marginTop: scale(20)
     },
-    logo: {
-        width: scale(60),
-        height: scale(60),
-    },
-    inputForm: {
+    emoticPopup: {
         width: '100%',
-        marginTop: scale(74)
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    divider: {
-        height: scale(10)
-    },
-    testReminderWrapper: {
-        width: '100%',
-        marginTop: scale(83),
-    },
-    forgetWrapper: {
-        marginTop: scale(24),
-        width: '100%',
-        alignItems: 'flex-end'
-    },
-    enterButton: {
-        backgroundColor: Colors.primaryBackColor,
-        paddingHorizontal: scale(26),
-        paddingVertical: scale(7),
-        borderRadius: scale(8)
-    },
-    buttonContent: {
-        color: Colors.primaryColor,
-        fontSize: scale(14)
-    },
-    btn: {
-        backgroundColor: "#ff0044",
-        padding: 15,
-        borderRadius: 5,
-        margin: 10,
-        width: 160,
-    },
-    text: {
-        fontSize: 30,
-        color: "white",
-        textAlign: "center",
-    },
-    row: {
-        flexDirection: "row",
-        marginBottom: 20,
-    },
+    graphWrapper: {
+        flex: 1,
+        backgroundColor: Colors.transparent
+    }
 });

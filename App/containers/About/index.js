@@ -193,7 +193,7 @@ const AboutScreen = ({ navigation }) => {
                         <View style={{ marginBottom: scale(20) }}>
                             <Hundle
                                 icon={Images.ic_right_left_arrow}
-                                title={'Shake Hundle'}
+                                title={'Wipe Hundle'}
                                 initValue={12}
                             />
                         </View>

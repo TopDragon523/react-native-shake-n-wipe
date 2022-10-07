@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
@@ -178,6 +179,11 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            //firebase crashlytics 
+            firebaseCrashlytics {
+                nativeSymbolUploadEnabled true
+                unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
+            }
         }
     }
 
