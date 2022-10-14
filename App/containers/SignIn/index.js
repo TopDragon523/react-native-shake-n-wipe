@@ -75,7 +75,6 @@ const SignInScreen = ({ navigation }) => {
                                     description: ['round neck', 'long sleeved'],
                                     size: 'L',
                                 })
-
                             }}
                         />
                         <View style={styles.continueMessageWrapper}>
